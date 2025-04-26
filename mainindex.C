@@ -21,6 +21,15 @@ void delete_message();
 void store_message();
 void display_first_menu();
 void user_first_input(int choice);
+void search_word_phrase ();
+void modify_message ();
+
+//Need to add in these functions.
+//  char * read_string( char *filename) 
+//  void write_string( char *filename, char* message)
+//  char * redact( char *message, char *list)
+//  char * encrypt_columnar( char *message, char *key)
+//  char * decrypt_columnar( char *message, char *key)
 
 int main() {
     int first_choice;
@@ -54,7 +63,7 @@ void user_first_input(int choice) {
                 while (getchar() != '\n');
                 switch (user_main_choice) {
                     case 1:
-                        printf("\nYou chose to view all messages.\n");
+                        printf("\nYou chose to view all messages/notes.\n");
                         view_messages();
                         break;
                     case 2:
@@ -62,16 +71,25 @@ void user_first_input(int choice) {
                         search_message();
                         break;
                     case 3:
-                        printf("\nYou can now delete a message.\n");
+                        printf("\nYou can now delete a message/note.\n");
                         delete_message();
                         break;
                     case 4:
                         printf("\nYou can now store a new message.\n");
                         store_message();
                         break;
+                   case 5:
+                        printf("\nYou can now search for a message/note using a word/phrase.\n");
+                        search_word_phrase();
+                        break;
+                   case 6:
+                        printf("\nYou can now modify a message/note.\n");
+                        modify_message();
+                        break;
                     case 0:
                         printf("\nYou have exited the application.\n");
                         break;
+
                     default:
                         printf("\nXX Invalid choice. Please try again. XX\n");
                 }
@@ -97,6 +115,7 @@ void display_menu() {
 }
 
 void view_messages() {
+    //Implement the message id, title and partial message/note to screen for each of the messages.
     if (message_count == 0) {
         printf("\nNo messages stored yet.\n");
         return;
@@ -108,6 +127,7 @@ void view_messages() {
 }
 
 void search_message() {
+    //Implement enter the message/note id or title after which the application searches for and once found, displays the message id, title and the full message to screen. If the message/note was encrypted, the user should have the option to decrypt the message/note to view it as plain text.
     if (message_count == 0) {
         printf("\nNo messages to search.\n");
         return;
@@ -131,6 +151,7 @@ void search_message() {
 }
 
 void delete_message() {
+    //Implement: If the user chooses to delete a note/message, they will be prompted to enter the message/note id or title after which the application searches for and once found, deletes the note/message from the file.
     if (message_count == 0) {
         printf("\nNo messages to delete.\n");
         return;
@@ -159,6 +180,13 @@ void delete_message() {
 }
 
 void store_message() {
+    //Implement a menu, to store message unchanged, to censor a message before storing, encrypt a messgae before storing or to decrypt a stored message.
+    //To store unchanged, application should accept a title, and content.
+    //To censor, the application should ask the user to enter a comma separated list of words that should be censored from the message/note. The program will implement an algorithm that redacts or censors the words provided from the text in the file. It should then accept a title for the message/note and the contents of the message/note, redact the words if they appear in the message/note and store the result appropriately in the defined file.
+    //To enncrypt: If the user chooses to encrypt the message/note, the application should ask the user to enter a key to be used for the encryption. The program will implement a columnar transposition algorithm that encrypts the words provided from the message/note entered. It should accept the contents of the message/file, encrypt it following the guide below and store the result appropriately in the defined file.
+    // To decrypt a stored message: If the user chooses to decrypt a stored message/note, the application should ask the user to enter a key to be used for the decryption. The program will implement an algorithm that decrypts the previous columnar transposition. It should then read the contents of the message and decrypt it following the guide below and display the results back to the user
+    
+    
     if (message_count >= MAX_MESSAGES) {
         printf("\nMessage storage is full.\n");
         return;
@@ -169,3 +197,13 @@ void store_message() {
     message_count++;
     printf("\nMessage stored successfully.\n");
 }
+
+void search_word_phrase () {
+    //Put code implementation here. If the user chooses to search for and view a note/message, they can be prompted to enter a word/phrase from the message/note id or title after which the application searches for messages matching this criteria and once found, displays the message id, title and the full message to screen. If the message/note was encrypted, the user should have the option to decrypt the message/note to view it as plain text.
+}
+
+void modify_message () {
+    //Put code implementation here. If the user chooses to modify an existing note/message, they will be prompted to enter the message/note id or title after which the application searches for and once found, allows the user to modify the text stored. If the message/note was encrypted, the message/note should be decrypted before it is modified.
+}
+
+
