@@ -1,4 +1,4 @@
-//Program does not work atm. Need to add in the stuff for max marks.
+//This one works, but it is missing alot. Completed it in the other files.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -133,76 +133,24 @@ void search_message() {
     if (message_count == 0) {
         printf("\nNo messages to search.\n");
         return;
-//The program doesn't work due to this part. I added, in this menu part. If you comment out this part and use the part commented out.
-    printf("\nSearch Using:\n");
-    printf("1. Message ID\n");
-    printf("2. Message Title\n");
-    printf("Press any other key to go back.\n");
-    printf("\nPlease enter your choice: ");
-    
-    int search_choice;
-    if (scanf("%d", &search_choice) != 1) {
-        while (getchar() != '\n');
-        return;
     }
-    while (getchar() != '\n');
-    
-    if (search_choice == 1) {
-        printf("Please enter the message ID: ");
-        int id;
-        if (scanf("%d", &id) != 1) {
-            while (getchar() != '\n');
-            printf("Invalid ID entered.\n");
-            return;
-        }
-        while (getchar() != '\n');
-        
-        int index = find_message_by_id(id);
-        if (index != -1) {
-            display_message(index);
-        } else {
-            printf("Message with ID %d not found.\n", id);
-        }
-    } else if (search_choice == 2) {
-        printf("Enter title to search: ");
-        char title[100];
-        fgets(title, sizeof(title), stdin);
-        title[strcspn(title, "\n")] = '\0';
+   char search_term[MAX_MESSAGE_LENGTH];
+    printf("\nEnter the text to search for: ");
+fgets(search_term, MAX_MESSAGE_LENGTH, stdin);
+    search_term[strcspn(search_term, "\n")] = 0; // Remove trailing newline
 
-        bool found = false;
-        for (int i = 0; i < message_count; i++) {
-            if (strcmp(messages[i].title, title) == 0) {
-                display_message(i);
-                found = true;
-            }
+    int found = 0;
+    printf("\n==== Search Results ====\n");
+    for (int i = 0; i < message_count; i++) {
+        if (strstr(messages[i].text, search_term) != NULL) {
+            printf("%d: %s\n", i + 1, messages[i].text);
+            found = 1;
         }
-
-        if (!found) {
-            printf("No messages with title '%s' found.\n", title);
-        }
-    } else {
-        printf("Invalid choice. Going back.\n");
+    }
+    if (!found) {
+        printf("No messages found containing '%s'.\n", search_term);
     }
 }
-
-   // }
-   // char search_term[MAX_MESSAGE_LENGTH];
-   // printf("\nEnter the text to search for: ");
-   // fgets(search_term, MAX_MESSAGE_LENGTH, stdin);
-    //search_term[strcspn(search_term, "\n")] = 0; // Remove trailing newline
-
-   // int found = 0;
-   // printf("\n==== Search Results ====\n");
-   // for (int i = 0; i < message_count; i++) {
-    //    if (strstr(messages[i].text, search_term) != NULL) {
-      //      printf("%d: %s\n", i + 1, messages[i].text);
-      //      found = 1;
-      //  }
- //   }
-    //if (!found) {
-        printf("No messages found containing '%s'.\n", search_term);
-   // }
-//}
 
 void delete_message() {
     //Implement: If the user chooses to delete a note/message, they will be prompted to enter the message/note id or title after which the application searches for and once found, deletes the note/message from the file.
