@@ -1,1 +1,48 @@
+Introduction
+This application allows you to store, view, and manage your notes/messages. You can store a note/message in its original form or with modifications, either by censoring or encrypting. All the messages are stored in a single file (Message_storage.txt) for efficient storage.
+
+Operating System
+Windows or any operating system that can run C executable.
+
+Installation
+1. Make sure you have the executable file (Message_Storage_Application.exe).
+2. Open up the Command Prompt. You can do this by typing cmd in the search bar.
+3. Copy the directory of the file containing the executable file and insert it into the following cd and press ENTER.
+  Example:
+      cd C:Message_Storage_Application.exe
+
+Main Menu
+When you run the application, you will be presented with the following menu:
+    1. View all notes/messages stored.
+    2. Search for and view a note/message stored.
+    3. Delete a note/message stored.
+    4. Store a new/message.
+    5. Search for a new/message using a word/phrase.
+    6. Modify an existing stored message.
+To select an option, enter the corresponding number and press ENTER.
+
+1. View all notes/messages stored.
+If you select this option, the application will display a list of all stored notes/messages. If no messages is stored you will be prompted. For each note/message, its ID, Title and a Preview of the note/message will be displayed.
+
+2. Search for and view a note/message stored.
+If you select this option, the application will ask you to enter the ID or Title of the message that you want to search and view. When you input the required information and the message is found, it will display the message ID, Title and the full message. If the message was encrypted, you will be further prompted to provide the key to decrypt it.
+
+3. Delete a note/message stored.
+If you select this option, the application will prompt you to enter the ID or Title of the message that you want to delete. If the message is found, it will be deleted from the file.
+
+4. Store a new/message.
+If you select this option, the application will prompt you to either store the 
+
+
+5. Search for a new/message using a word/phrase.
+
+
+
+6. Modify an existing stored message.
+
+
+
+
+
+
 
