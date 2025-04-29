@@ -9,53 +9,6 @@
 #define MAX_MESSAGE_LENGTH 256
 
 
-int main() {
-    Message messages[MAX_MESSAGES];
-    int message_count = 0;
-    int choice;
-    const char *filename = "Messages_storage.txt"; // File to store messages
-
-    // Load messages from file
-    all_messages(messages, &message_count, filename);
-
-    do {
-        displayMenu();
-        scanf("%d", &choice);
-        getchar(); 
-
-        switch (choice) {
-            case 1:
-                view_all_messages(messages, message_count);
-                break;
-            case 2:
-                search_messages(messages, message_count);
-                break;
-            case 3:
-                delete_message(messages, &message_count);
-                break;
-            case 4:
-                store_new_message(messages, &message_count);
-                break;
-            case 5:
-                message_search_by_word(messages, message_count); 
-                break;
-            case 6:
-                modify_message(messages, message_count); 
-            case 0:
-                printf("\n You have exitted the program...\n");
-                break;
-            default:
-            printf("\nXXX Invalid option, please try again. XXX\n");
-        }
-
-        // Save messages to file after each operation
-        save_messages(messages, message_count, filename);
-
-    } while (choice != 0);
-
-    return 0;
-}
-
 // Function to display the main menu
 void displayMenu() {
     printf("\n===Message Storage Application===\n");
@@ -72,19 +25,19 @@ void displayMenu() {
 // Function to view all messages
 void view_all_messages(Message messages[], int count) {
     if (count == 0) {
-        printf("No notes/messages stored.\n");
+        printf("\nNo notes/messages stored.\n");
           return;
       }
       printf("\n---All Notes/Messages Stored ---\n");
         for (int i = 0; i < count; i++) {
-            printf("ID: %d, Title: %s, Note/Message: %.50s...\n", messages[i].id, messages[i].title, messages[i].content);
+            printf("ID: %d, Title: %s, Preview of Note/Message: %.50s...\n", messages[i].id, messages[i].title, messages[i].content);
         }
     }
 
 // Function to search for a message by ID or title
 void search_message(Message messages[], int count) {
     if (count == 0) {
-        printf("No notes/messages stored.\n");
+        printf("\nNo notes/messages stored.\n");
         return;
     }
 
@@ -94,7 +47,7 @@ void search_message(Message messages[], int count) {
     int search_choice;
 
     printf("\nHow do you want to search for the note/message?\n");
-    printf("1. Search by ID.\n");
+    printf("\n1. Search by ID.\n");
     printf("2. Seacrh by Title.\n");
     printf("\nPlease enter your choice:\n");
     scanf("%d", &search_choice);
@@ -113,7 +66,7 @@ void search_message(Message messages[], int count) {
             }
         }
     } else if (search_choice == 2) {
-        printf("Enter message title: ");
+        printf("\nPlease enter message title.\n");
         fgets(search_by_title, MAX_TITLE_LENGTH, stdin);
         search_by_title[strcspn(search_by_title, "\n")] = 0; 
         for (int i = 0; i < count; i++) {
@@ -130,14 +83,14 @@ void search_message(Message messages[], int count) {
     }
 
     if (!found) {
-        printf("Message not found.\n");
+        printf("\nMessage not found.\n");
     }
 }
 
 // Function to delete a message
 void delete_message(Message messages[], int *count) {
     if (*count == 0) {
-        printf("No notes/messages stored.\n");
+        printf("\nNo notes/messages stored.\n");
         return;
     }
 
@@ -171,7 +124,7 @@ void delete_message(Message messages[], int *count) {
             }
         }
     } else if (delete_choice == 2) {
-        printf("Enter message title to delete: ");
+        printf("\nPlease enter the message title to delete: ");
         fgets(delete_by_title, MAX_TITLE_LENGTH, stdin);
         delete_by_title[strcspn(delete_by_title, "\n")] = 0; 
         for (int i = 0; i < *count; i++) {
@@ -199,14 +152,14 @@ void delete_message(Message messages[], int *count) {
 // Function to store a new message
 void store_new_message(Message messages[], int *count) {
     if (*count >= MAX_MESSAGES) {
-        printf("Maximum number of messages reached.\n");
+        printf("\nMessage Storage Full. Please delete a message and try again.\n");
         return;
     }
 
     int storage_choice;
     char message_content[MAX_MESSAGE_LENGTH];
 
-    printf("How do you want to store the message?\n");
+    printf("\nHow do you want to store the message?\n");
     printf("1. Store original note/message.\n");
     printf("2. Censor the note/message before storing.\n");
     printf("3. Encrypt the note/message before storing.\n");
@@ -239,7 +192,7 @@ void store_new_message(Message messages[], int *count) {
 
     } else if (storage_choice == 3) {
         char key[50];
-        printf("Please enter the encryption key:\n");
+        printf("\nPlease enter the encryption key:\n");
         fgets(key, 50, stdin);
         key[strcspn(key, "\n")] = 0; 
         char *encrypted_message = encrypt_columnar(message_content, key);
@@ -252,13 +205,13 @@ void store_new_message(Message messages[], int *count) {
     }
 
     (*count)++;
-    printf("Message stored successfully.\n");
+    printf("\nYour message has been stored successfully.\n");
 }
 
 // Function to search for messages by word/phrase.
 void message_search_by_word(Message messages[], int count) {
     if (count == 0) {
-        printf("No notes/messages stored.\n");
+        printf("\nNo notes/messages stored.\n");
         return;
     }
 
@@ -276,7 +229,7 @@ void message_search_by_word(Message messages[], int count) {
             found = 1;
             
             char decrypt_message;
-            printf("Do you want to decrypt this message? (y/n): ");
+            printf("\nDo you want to decrypt this message? (y/n): ");
             scanf(" %c", &decrypt_message);
             getchar(); 
 
@@ -293,14 +246,14 @@ void message_search_by_word(Message messages[], int count) {
     }
 
     if (!found) {
-        printf("No messages found using that word/phrase.\n");
+        printf("\nNo messages found using that word/phrase.\n");
     }
 }
 
 // Function to modify an existing message 
 void modify_message(Message messages[], int count) {
     if (count == 0) {
-        printf("No notes/messages stored.\n");
+        printf("\nNo notes/messages stored.\n");
         return;
     }
 
@@ -309,7 +262,7 @@ void modify_message(Message messages[], int count) {
     int found = 0;
     int modify_message;
 
-    printf("How do you want to modify a stored message?\n");
+    printf("\nHow do you want to modify a stored message?\n");
     printf("1. Modify by ID.\n");
     printf("2. MOdify by title.\n");
     printf("\nPlease enter your choice:\n");
@@ -317,7 +270,7 @@ void modify_message(Message messages[], int count) {
     getchar(); 
 
     if (modify_message == 1) {
-        printf("Please enter the message ID to modify: ");
+        printf("\nPlease enter the message ID to modify: ");
         scanf("%d", &modify_by_id);
         getchar(); 
         for (int i = 0; i < count; i++) {
@@ -326,7 +279,7 @@ void modify_message(Message messages[], int count) {
 
                 //Option to decrypt
                 char decrypt_message;
-                printf("Do you want to decrypt this message before modifying? (y/n): ");
+                printf("\nDo you want to decrypt this message before modifying? (y/n): ");
                 scanf(" %c", &decrypt_message);
                 getchar(); 
 
@@ -337,9 +290,9 @@ void modify_message(Message messages[], int count) {
                     fgets(key, 50, stdin);
                     key[strcspn(key, "\n")] = 0; 
                     char *decrypted_message = decrypt_columnar(messages[i].content, key);
-                    printf("Current Message Stored: %s\n", decrypted_message);
+                    printf("\nCurrent Message Stored: %s\n", decrypted_message);
 
-                    printf("Please enter the new message to be stored.\n");
+                    printf("\nPlease enter the new message to be stored.\n");
                     fgets(message_content, MAX_MESSAGE_LENGTH, stdin);
                     message_content[strcspn(message_content, "\n")] = 0; 
 
@@ -348,14 +301,14 @@ void modify_message(Message messages[], int count) {
                 } else {
                     printf("\nCurrent Message Stored: %s\n", messages[i].content);
 
-                    printf("Please enter the new message to be stored.\n");
+                    printf("\nPlease enter the new message to be stored.\n");
                     fgets(message_content, MAX_MESSAGE_LENGTH, stdin);
                     message_content[strcspn(message_content, "\n")] = 0; 
 
                     strcpy(messages[i].content, message_content);
                 }
 
-                printf("Your message hase been sucessfully modified.\n");
+                printf("\nYour message hase been sucessfully modified.\n");
                 break;
             }
         }
@@ -369,7 +322,7 @@ void modify_message(Message messages[], int count) {
 
                 //Option to decrypt
                 char decrypt_message;
-                printf("Do you want to decrypt this message before modifying? (y/n): ");
+                printf("\nDo you want to decrypt this message before modifying? (y/n): ");
                 scanf(" %c", &decrypt_message);
                 getchar(); 
 
@@ -380,25 +333,25 @@ void modify_message(Message messages[], int count) {
                     fgets(key, 50, stdin);
                     key[strcspn(key, "\n")] = 0; 
                     char *decrypted_message = decrypt_columnar(messages[i].content, key);
-                    printf("Current Message Stored: %s\n", decrypted_message);
+                    printf("\nCurrent Message Stored: %s\n", decrypted_message);
 
-                    printf("Please enter the new message to be stored.\n");
+                    printf("\nPlease enter the new message to be stored.\n");
                     fgets(tempContent, MAX_MESSAGE_LENGTH, stdin);
                     tempContent[strcspn(tempContent, "\n")] = 0; 
 
                     strcpy(messages[i].content, tempContent);
                     free(decrypted_message);
                 } else {
-                    printf("Current Message Stored: %s\n", messages[i].content);
+                    printf("\nCurrent Message Stored: %s\n", messages[i].content);
 
-                    printf("Please enter the new message to be stored.\n");
+                    printf("\nPlease enter the new message to be stored.\n");
                     fgets(tempContent, MAX_MESSAGE_LENGTH, stdin);
                     tempContent[strcspn(tempContent, "\n")] = 0; 
 
                     strcpy(messages[i].content, tempContent);
                 }
 
-                printf("Message modified.\n");
+                printf("\nYour message has been successfully modified.\n");
                 break;
             }
         }
@@ -410,4 +363,51 @@ void modify_message(Message messages[], int count) {
     if (!found) {
         printf("\nMessage not found, please try again.\n");
     }
+}
+
+int main() {
+    Message messages[MAX_MESSAGES];
+    int message_count = 0;
+    int choice;
+    const char *filename = "Messages_storage.txt"; // File to store messages
+
+    // Load messages from file
+    all_messages(messages, &message_count, filename);
+
+    do {
+        displayMenu();
+        scanf("%d", &choice);
+        getchar(); 
+
+        switch (choice) {
+            case 1:
+                view_all_messages(messages, message_count);
+                break;
+            case 2:
+                search_message(messages, message_count);
+                break;
+            case 3:
+                delete_message(messages, &message_count);
+                break;
+            case 4:
+                store_new_message(messages, &message_count);
+                break;
+            case 5:
+                message_search_by_word(messages, message_count); 
+                break;
+            case 6:
+                modify_message(messages, message_count); 
+            case 0:
+                printf("\n You have exitted the program...\n");
+                break;
+            default:
+            printf("\nXXX Invalid option, please try again. XXX\n");
+        }
+
+        // Save messages to file after each operation
+        save_messages(messages, message_count, filename);
+
+    } while (choice != 0);
+
+    return 0;
 }
