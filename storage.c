@@ -1,9 +1,14 @@
+// This file implements the different functions of storing
+//    and loading a message to/from a file.
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "storage.h"
 
-#define MAX_MESSAGES 100
+#define MAX_MESSAGES 20
 #define MAX_TITLE_LENGTH 100
 #define MAX_MESSAGE_LENGTH 256
 
@@ -48,7 +53,7 @@ void write_string(char *filename, char *message) {
 void all_messages(Message messages[], int *count, const char *filename) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        *count = 0; // No file, start with empty
+        *count = 0; 
         return;
     }
 
@@ -56,7 +61,7 @@ void all_messages(Message messages[], int *count, const char *filename) {
     while (fscanf(file, "%d\n", &messages[*count].id) == 1 &&
            fgets(messages[*count].title, MAX_TITLE_LENGTH, file) != NULL &&
            fgets(messages[*count].content, MAX_MESSAGE_LENGTH, file) != NULL) {
-        // Remove trailing newlines
+        
         messages[*count].title[strcspn(messages[*count].title, "\n")] = '\0';
         messages[*count].content[strcspn(messages[*count].content, "\n")] = '\0';
         (*count)++;
