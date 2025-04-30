@@ -1,6 +1,6 @@
 // This is the header file for the storage functions.
 // This file, defines the message structure and declares the various functions for saving and loading 
-//     messages from the file.
+//    messages from the file.
 
 #ifndef FILE_IO_H_
 #define FILE_IO_H_
