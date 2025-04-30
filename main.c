@@ -14,7 +14,8 @@
 #define MAX_MESSAGE_LENGTH 256
 
 
-// Function to display the main menu
+// Function to display the main menu.
+// The user gets the options of how they want to navigate the application.
 void displayMenu() {
     printf("\n===Message Storage Application===\n");
     printf("1. View all notes/messages stored.\n");
@@ -97,7 +98,7 @@ void search_message(Message messages[], int count) {
     }
 }
 
-// Function to delete a message
+// Function to delete a message. Once again, first making sure, there are messages stored.
 void delete_message(Message messages[], int *count) {
     if (*count == 0) {
         printf("\nNo notes/messages stored.\n");
@@ -108,7 +109,8 @@ void delete_message(Message messages[], int *count) {
     char delete_by_title[MAX_TITLE_LENGTH];
     int found = 0;
     int delete_choice;
-
+    
+    //User gets prompted the options of how they want to search for their message to be deleted.
     printf("How do you want to search for your note/message to be deleted?\n");
     printf("1. Delete by ID.\n");
     printf("2. Delete by Title.\n");
@@ -116,7 +118,7 @@ void delete_message(Message messages[], int *count) {
     scanf("%d", &delete_choice);
     getchar(); 
 
-
+    //Search and delete by ID.
     if (delete_choice == 1) {
         printf("\nPlease enter the message ID that you wish to delete:\n");
         scanf("%d", &delete_by_id);
@@ -133,6 +135,7 @@ void delete_message(Message messages[], int *count) {
                 break;
             }
         }
+    //Search and delete by Title.
     } else if (delete_choice == 2) {
         printf("\nPlease enter the message title to delete: ");
         fgets(delete_by_title, MAX_TITLE_LENGTH, stdin);
@@ -160,6 +163,9 @@ void delete_message(Message messages[], int *count) {
 }
 
 // Function to store a new message
+// Once again, user gets prompted if there is no messages stored.
+// Additionally, the user is given the options of how they want to store this new message.
+//       Whether originally, censored or encrypted.
 void store_new_message(Message messages[], int *count) {
     if (*count >= MAX_MESSAGES) {
         printf("\nMessage Storage Full. Please delete a message and try again.\n");
@@ -169,6 +175,7 @@ void store_new_message(Message messages[], int *count) {
     int storage_choice;
     char message_content[MAX_MESSAGE_LENGTH];
 
+    //Here the User gets prompted the differnt options of how they want to store the messages.
     printf("\nHow do you want to store the message?\n");
     printf("1. Store original note/message.\n");
     printf("2. Censor the note/message before storing.\n");
@@ -179,10 +186,12 @@ void store_new_message(Message messages[], int *count) {
 
     messages[*count].id = *count + 1; 
 
+    //This is where the user gets asked to enter the messages' title.
     printf("\nPlease enter the message title:\n");
     fgets(messages[*count].title, MAX_TITLE_LENGTH, stdin);
     messages[*count].title[strcspn(messages[*count].title, "\n")] = 0; 
 
+    //This is where the user gets asked to enter the messages' content.
     printf("\nPlease enter the message content:\n");
     fgets(message_content, MAX_MESSAGE_LENGTH, stdin);
     message_content[strcspn(message_content, "\n")] = 0; 
@@ -219,6 +228,8 @@ void store_new_message(Message messages[], int *count) {
 }
 
 // Function to search for messages by word/phrase.
+// Depending on what the user chooses, the application will search for the 
+//     message by ID or Title.
 void message_search_by_word(Message messages[], int count) {
     if (count == 0) {
         printf("\nNo notes/messages stored.\n");
@@ -260,7 +271,12 @@ void message_search_by_word(Message messages[], int count) {
     }
 }
 
-// Function to modify an existing message 
+// Function to modify an already stored message.
+// Once again, user gets prompted if there is no messages stored.
+// Additionally, the user is given the options of how they want to search for the message 
+//       they want to modify.
+//       Whether by ID or Title.
+
 void modify_message(Message messages[], int count) {
     if (count == 0) {
         printf("\nNo notes/messages stored.\n");
@@ -279,6 +295,7 @@ void modify_message(Message messages[], int count) {
     scanf("%d", &modify_message);
     getchar(); 
 
+    // Function to search by ID to modify.
     if (modify_message == 1) {
         printf("\nPlease enter the message ID to modify: ");
         scanf("%d", &modify_by_id);
@@ -287,7 +304,7 @@ void modify_message(Message messages[], int count) {
             if (messages[i].id == modify_by_id) {
                 found = 1;
 
-                //Option to decrypt
+                //Option to decrypt the message.
                 char decrypt_message;
                 printf("\nDo you want to decrypt this message before modifying? (y/n): ");
                 scanf(" %c", &decrypt_message);
@@ -322,6 +339,7 @@ void modify_message(Message messages[], int count) {
                 break;
             }
         }
+    // Function to search by Title to modify.
     } else if (modify_message == 2) {
         printf("\nPlease enter the message Title to modify.\n");
         fgets(modify_by_title, MAX_TITLE_LENGTH, stdin);
@@ -330,7 +348,7 @@ void modify_message(Message messages[], int count) {
             if (strcmp(messages[i].title, modify_by_title) == 0) {
                 found = 1;
 
-                //Option to decrypt
+                //Option to decrypt the message.
                 char decrypt_message;
                 printf("\nDo you want to decrypt this message before modifying? (y/n): ");
                 scanf(" %c", &decrypt_message);
@@ -375,13 +393,16 @@ void modify_message(Message messages[], int count) {
     }
 }
 
+
+// This is the main menu function. It has all the potentail options and their corresponding 
+// varaibles.
 int main() {
     Message messages[MAX_MESSAGES];
     int message_count = 0;
     int choice;
     const char *filename = "Messages_storage.txt"; // File to store messages
 
-    // Load messages from file
+    // Loads all the messages from file (Message_storage.txt).
     all_messages(messages, &message_count, filename);
 
     do {
@@ -414,7 +435,7 @@ int main() {
             printf("\nXXX Invalid option, please try again. XXX\n");
         }
 
-        // Save messages to file after each operation
+        // Save messages to file after each operation.
         save_messages(messages, message_count, filename);
 
     } while (choice != 0);
