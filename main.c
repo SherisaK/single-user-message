@@ -1,3 +1,8 @@
+// This file contains the main function and the user interface 
+// for the message/note storing application. It handles user input,
+// displays the menu, and calls the appropriate functions based on
+// the user's selection.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,7 +27,8 @@ void displayMenu() {
     printf("\nPlease enter your choice:\n");
 }
 
-// Function to view all messages
+// Function to view all messages. Displays the Message ID, Title and the message,
+// otherwise, the user gets promted that there is no messages stored.
 void view_all_messages(Message messages[], int count) {
     if (count == 0) {
         printf("\nNo notes/messages stored.\n");
@@ -34,7 +40,7 @@ void view_all_messages(Message messages[], int count) {
         }
     }
 
-// Function to search for a message by ID or title
+// Function to search for a message by ID or title only if there is stored messages.
 void search_message(Message messages[], int count) {
     if (count == 0) {
         printf("\nNo notes/messages stored.\n");
@@ -45,7 +51,8 @@ void search_message(Message messages[], int count) {
     char search_by_title[MAX_TITLE_LENGTH];
     int found = 0;
     int search_choice;
-
+    
+    //Prompts the user to search using ID or Title.
     printf("\nHow do you want to search for the note/message?\n");
     printf("\n1. Search by ID.\n");
     printf("2. Seacrh by Title.\n");
@@ -53,6 +60,8 @@ void search_message(Message messages[], int count) {
     scanf("%d", &search_choice);
     getchar(); 
 
+
+    //Search by ID.
     if (search_choice == 1) {
         printf("\nPlease enter the message ID:\n");
         scanf("%d", &search_by_id);
@@ -65,6 +74,7 @@ void search_message(Message messages[], int count) {
                 break;
             }
         }
+    //Search by Title.
     } else if (search_choice == 2) {
         printf("\nPlease enter message title.\n");
         fgets(search_by_title, MAX_TITLE_LENGTH, stdin);
