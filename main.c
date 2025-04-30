@@ -9,7 +9,7 @@
 #include "storage.h"
 #include "message_modification.h"
 
-#define MAX_MESSAGES 100
+#define MAX_MESSAGES 200
 #define MAX_TITLE_LENGTH 100
 #define MAX_MESSAGE_LENGTH 256
 
