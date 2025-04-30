@@ -9,9 +9,9 @@
 #include "storage.h"
 #include "message_modification.h"
 
-#define MAX_MESSAGES 200
-#define MAX_TITLE_LENGTH 100
-#define MAX_MESSAGE_LENGTH 256
+#define MAX_MESSAGES 20 // Maximum number of messgaes that can be saved.
+#define MAX_TITLE_LENGTH 100 // Maximum length of the message title.
+#define MAX_MESSAGE_LENGTH 256 // Maximum length of the message content.
 
 
 // Function to display the main menu.
