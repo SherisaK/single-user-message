@@ -1,2 +1,2 @@
-# single-user-message
-CSE1201 semester project. 
+# Message Storage Application
+CSE1201 Group 16 Semester Project 
